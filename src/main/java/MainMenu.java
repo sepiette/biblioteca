@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainMenu {
 
@@ -20,7 +22,7 @@ public class MainMenu {
     public void start() throws IOException {
         welcomeMessage.displayWelcomeMessage();
         displayMenu();
-        readAndProcessUserInput();
+        readUserInput();
     }
 
     public void displayMenu() {
@@ -33,10 +35,27 @@ public class MainMenu {
     }
 
 
-    public void readAndProcessUserInput() throws IOException {
+    public void readUserInput() throws IOException {
         String str = reader.readLine();
-        if (str.equals("1"))
+        while (!str.equals("1") && (!str.equals("quit"))) {
+            printStream.println("Select a Valid Option!");
+            str = reader.readLine();
+        }
+        if (str.equals("quit")) printStream.println("Goodbye");
+        else {
             biblioteca.listBooks();
+        }
+    }
+
+    public void processUserInput() {
+        /*Map<String, Command> commandMap = new HashMap<>();
+        commandMap.put("1", new ListBooksCommand());
+        String input = readValidInput();
+        if(commandMap.containsKey(input)) {
+            Command command = commandMap.get(input);
+            command.execute();
+        }*/
+
     }
 }
 

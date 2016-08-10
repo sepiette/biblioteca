@@ -13,8 +13,6 @@ public class BibliotecaTest {
     private Biblioteca biblioteca;
     private Book book;
     private PrintStream printStream;
-    private WelcomeMessage welcomeMessage;
-    private MainMenu mainMenu;
 
     @Before
     public void setUp() throws Exception {

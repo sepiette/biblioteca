@@ -46,15 +46,28 @@ public class MainMenuTest {
     @Test
     public void shouldReadInUserInput() throws Exception {
         when(reader.readLine()).thenReturn("1");
-        mainMenu.readAndProcessUserInput();
+        mainMenu.readUserInput();
         verify(reader).readLine();
     }
 
     @Test
     public void shouldListBooksWhenUserEntersOne() throws IOException {
         when(reader.readLine()).thenReturn("1");
-        mainMenu.readAndProcessUserInput();
+        mainMenu.readUserInput();
         verify(biblioteca).listBooks();
     }
 
+    @Test
+    public void shouldAlertUserWhenInvalidInputIsEntered() throws IOException {
+        when(reader.readLine()).thenReturn("$","1");
+        mainMenu.readUserInput();
+        verify(printStream).println("Select a Valid Option!");
+    }
+
+    @Test
+    public void shouldQuitWhenUserSelectsQuit() throws Exception {
+        when(reader.readLine()).thenReturn("quit");
+        mainMenu.readUserInput();
+        verify(printStream).println("Goodbye");
+    }
 }
