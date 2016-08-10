@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -12,7 +13,11 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         WelcomeMessage welcomeMessage = new WelcomeMessage(printStream);
         MainMenu menu = new MainMenu(printStream, reader, biblioteca, welcomeMessage);
-        menu.start();
+        try {
+            menu.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static Biblioteca initializeBiblioteca() {

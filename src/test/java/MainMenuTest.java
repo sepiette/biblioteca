@@ -44,9 +44,17 @@ public class MainMenuTest {
     }
 
     @Test
-    public void shouldListBooksWhenUserEntersOne() throws IOException {
+    public void shouldReadInUserInput() throws Exception {
         when(reader.readLine()).thenReturn("1");
+        mainMenu.readAndProcessUserInput();
+        verify(reader).readLine();
     }
 
+    @Test
+    public void shouldListBooksWhenUserEntersOne() throws IOException {
+        when(reader.readLine()).thenReturn("1");
+        mainMenu.readAndProcessUserInput();
+        verify(biblioteca).listBooks();
+    }
 
 }

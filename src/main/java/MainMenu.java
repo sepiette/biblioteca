@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintStream;
 
 public class MainMenu {
@@ -16,9 +17,10 @@ public class MainMenu {
         this.welcomeMessage = welcomeMessage;
     }
 
-    public void start() {
+    public void start() throws IOException {
         welcomeMessage.displayWelcomeMessage();
         displayMenu();
+        readAndProcessUserInput();
     }
 
     public void displayMenu() {
@@ -31,5 +33,10 @@ public class MainMenu {
     }
 
 
+    public void readAndProcessUserInput() throws IOException {
+        String str = reader.readLine();
+        if (str.equals("1"))
+            biblioteca.listBooks();
+    }
 }
 
