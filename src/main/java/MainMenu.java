@@ -1,33 +1,35 @@
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.PrintStream;
 
 public class MainMenu {
 
     private PrintStream printStream;
     private BufferedReader reader;
+    private final Biblioteca biblioteca;
+    private final WelcomeMessage welcomeMessage;
 
 
-    public MainMenu(PrintStream printStream, BufferedReader reader) {
+    public MainMenu(PrintStream printStream, BufferedReader reader, Biblioteca biblioteca, WelcomeMessage welcomeMessage) {
         this.printStream = printStream;
         this.reader = reader;
+        this.biblioteca = biblioteca;
+        this.welcomeMessage = welcomeMessage;
+    }
+
+    public void start() {
+        welcomeMessage.displayWelcomeMessage();
+        displayMenu();
     }
 
     public void displayMenu() {
-        printStream.println("Main Menu:");
+        printStream.println("Please select one of the following options:");
         displayMenuOptions();
     }
 
     private void displayMenuOptions() {
-        printStream.println("Enter 0 for a list of books:");
+        printStream.println("1 - List Books");
     }
 
-    public void readUserInput() throws IOException {
-        try {
-            reader.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 }
 

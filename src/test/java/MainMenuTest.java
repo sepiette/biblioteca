@@ -5,20 +5,24 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
+
 
 public class MainMenuTest {
 
     private PrintStream printStream;
     private MainMenu mainMenu;
     private BufferedReader reader;
+    private Biblioteca biblioteca;
+    private WelcomeMessage welcomeMessage;
 
     @Before
     public void setUp() throws Exception {
         printStream = mock(PrintStream.class);
         reader = mock(BufferedReader.class);
-        mainMenu = new MainMenu(printStream, reader);
+        biblioteca = mock(Biblioteca.class);
+        welcomeMessage = mock(WelcomeMessage.class);
+        mainMenu = new MainMenu(printStream, reader, biblioteca, welcomeMessage);
     }
 
     @Test
@@ -34,9 +38,15 @@ public class MainMenuTest {
     }
 
     @Test
-    public void shouldTakeUserInputAfterDisplayingMenu() throws IOException {
-        mainMenu.readUserInput();
-        verify(reader).readLine();
+    public void shouldPrintWelcomeMessageWhenStart() throws Exception {
+        mainMenu.start();
+        verify(welcomeMessage).displayWelcomeMessage();
     }
+
+    @Test
+    public void shouldListBooksWhenUserEntersOne() throws IOException {
+        when(reader.readLine()).thenReturn("1");
+    }
+
 
 }

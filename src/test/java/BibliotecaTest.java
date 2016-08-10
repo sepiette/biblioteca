@@ -21,9 +21,7 @@ public class BibliotecaTest {
         listOfBooks = new ArrayList<>();
         book = mock(Book.class);
         printStream = mock(PrintStream.class);
-        welcomeMessage = mock(WelcomeMessage.class);
-        mainMenu = mock(MainMenu.class);
-        biblioteca = new Biblioteca(listOfBooks,welcomeMessage, mainMenu,printStream);
+        biblioteca = new Biblioteca(listOfBooks,printStream);
     }
 
     @Test
@@ -48,8 +46,4 @@ public class BibliotecaTest {
         verify(book, times(3)).printBookInformation();
     }
 
-    @Test
-    public void shouldReturnUserInputToBibliotecaWhenUserChooses() throws Exception {
-
-    }
 }
