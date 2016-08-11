@@ -1,8 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainMenu {
 
@@ -22,7 +20,7 @@ public class MainMenu {
     public void start() throws IOException {
         welcomeMessage.displayWelcomeMessage();
         displayMenu();
-        readUserInput();
+        executeMenuOptions();
     }
 
     public void displayMenu() {
@@ -31,31 +29,47 @@ public class MainMenu {
     }
 
     private void displayMenuOptions() {
+
         printStream.println("1 - List Books");
+        printStream.println("2 - Checkout Books");
     }
 
+    public void executeMenuOptions() throws IOException {
+        String result = readUserInput();
+        while(!result.equals("quit")) {
+            if(result.equals("1")){
+                biblioteca.listBooks();
+            }
+            else if(result.equals("2")){
+                biblioteca.checkoutBook();
+            }
+            result = readUserInput();
+        }
+        printStream.println("Goodbye");
+    }
 
-    public void readUserInput() throws IOException {
+    public String readUserInput() throws IOException {
         String str = reader.readLine();
-        while (!str.equals("1") && (!str.equals("quit"))) {
+        while (!str.equals("1") && !str.equals("2")&& (!str.equals("quit"))) {
             printStream.println("Select a Valid Option!");
             str = reader.readLine();
         }
-        if (str.equals("quit")) printStream.println("Goodbye");
-        else {
-            biblioteca.listBooks();
-        }
+        return str;
     }
 
     public void processUserInput() {
         /*Map<String, Command> commandMap = new HashMap<>();
         commandMap.put("1", new ListBooksCommand());
-        String input = readValidInput();
+        String input = readUserInput();
         if(commandMap.containsKey(input)) {
             Command command = commandMap.get(input);
             command.execute();
         }*/
 
     }
+
+
+
+
 }
 
