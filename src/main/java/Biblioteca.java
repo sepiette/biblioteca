@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.Collection;
 
@@ -11,10 +10,10 @@ public class Biblioteca {
     private PrintStream printStream;
     private BufferedReader reader;
 
-    public Biblioteca(Collection<Book> listOfBooks, PrintStream printStream) {
+    public Biblioteca(Collection<Book> listOfBooks, PrintStream printStream, BufferedReader reader) {
         this.listOfBooks = listOfBooks;
         this.printStream = printStream;
-        this.reader = new BufferedReader(new InputStreamReader(System.in));
+        this.reader = reader;
     }
 
     public void listBooks() {
@@ -25,18 +24,21 @@ public class Biblioteca {
 
     public void checkoutBook() {
         printStream.println("Enter Title of Book you wish to checkout:");
-        listOfBooks.remove(0);
-    }
+        for(Book book: listOfBooks){
+            String input = readUserInput();
+            if(book.isThisYourTitle(input)){
+                listOfBooks.remove(book);
+                break;
+            }
+        }
 
-    private void askUserForBookTitleToCheckout() {
-
     }
-//    private String readUserInput(){
-//        try {
-//            return reader.readLine();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
+    private String readUserInput(){
+        try {
+            return reader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

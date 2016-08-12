@@ -22,11 +22,12 @@ public class Main {
 
     private static Biblioteca initializeBiblioteca() {
         PrintStream printStream = new PrintStream(System.out);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Collection<Book> listOfBooks = new ArrayList<>();
         listOfBooks.add(new Book("Into the Wild", "John Kraukaer", "1997", printStream));
         listOfBooks.add(new Book("Animal Farm", "George Orwell", "1934", printStream));
 
-        return new Biblioteca(listOfBooks, printStream);
+        return new Biblioteca(listOfBooks, printStream, reader);
     }
 
 }

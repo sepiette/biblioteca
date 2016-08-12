@@ -1,12 +1,15 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.BufferedReader;
+import java.io.Console;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class BibliotecaTest {
@@ -15,13 +18,15 @@ public class BibliotecaTest {
     private Biblioteca biblioteca;
     private Book book;
     private PrintStream printStream;
+    private BufferedReader reader;
 
     @Before
     public void setUp() throws Exception {
         listOfBooks = new ArrayList<>();
         book = mock(Book.class);
         printStream = mock(PrintStream.class);
-        biblioteca = new Biblioteca(listOfBooks,printStream);
+        reader = mock(BufferedReader.class);
+        biblioteca = new Biblioteca(listOfBooks,printStream,reader);
     }
 
     @Test
@@ -59,6 +64,16 @@ public class BibliotecaTest {
         assertFalse(listOfBooks.contains(book));
     }
 
+    @Test
+    public void shouldStillContainBookWhenBook1Removed() throws Exception {
+        Book book1 = mock(Book.class);
+        when(reader.readLine()).thenReturn("Book Title","Book Title");
+        when(book1.isThisYourTitle("Book Title")).thenReturn(true);
+        listOfBooks.add(book);
+        listOfBooks.add(book1);
+        biblioteca.checkoutBook();
+        assertTrue(listOfBooks.contains(book));
+    }
     //    @Test
 //    public void shouldRemoveBookFromCollectionWhenCheckoutIsCalled() {
 //        String str = new String();
