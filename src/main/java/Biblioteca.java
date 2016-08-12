@@ -18,7 +18,18 @@ public class Biblioteca {
         }
     }
 
-
     public void checkoutBook() {
+        askUserForBookTitleToCheckout();
+    }
+
+    private void askUserForBookTitleToCheckout() {
+        //ask user for book title to check out
+        System.out.println("Please enter a book title to checkout");
+        String bookTitle = reader.readLine();
+        for(Book book: listOfBooks) {
+            if(book.isThisYourTitle(bookTitle)) {
+                listOfBooks.remove(book);
+            }
+        }
     }
 }

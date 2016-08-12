@@ -1,7 +1,14 @@
 
 public class ListBooksCommand implements Command {
-    void execute() {
-        //biblioteca.listBooks();
+
+    private Biblioteca biblioteca;
+
+    public ListBooksCommand(Biblioteca biblioteca) {
+
+        this.biblioteca = biblioteca;
     }
 
+    public void execute() {
+        biblioteca.listBooks();
+    }
 }

@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainMenu {
 
@@ -8,6 +10,7 @@ public class MainMenu {
     private BufferedReader reader;
     private final Biblioteca biblioteca;
     private final WelcomeMessage welcomeMessage;
+    private final Map<String, Command> commandMap;
 
 
     public MainMenu(PrintStream printStream, BufferedReader reader, Biblioteca biblioteca, WelcomeMessage welcomeMessage) {
@@ -15,6 +18,14 @@ public class MainMenu {
         this.reader = reader;
         this.biblioteca = biblioteca;
         this.welcomeMessage = welcomeMessage;
+        commandMap = new HashMap<>();
+        initializeCommandMap(commandMap);
+    }
+
+    private void initializeCommandMap(Map<String, Command> commandMap) {
+        commandMap.put("1", new ListBooksCommand(biblioteca));
+        commandMap.put("2", new CheckoutBooksCommand(biblioteca));
+
     }
 
     public void start() throws IOException {
@@ -37,15 +48,24 @@ public class MainMenu {
     public void executeMenuOptions() throws IOException {
         String result = readUserInput();
         while(!result.equals("quit")) {
-            if(result.equals("1")){
-                biblioteca.listBooks();
-            }
-            else if(result.equals("2")){
-                biblioteca.checkoutBook();
-            }
+            processUsersOption(result);
             result = readUserInput();
         }
         printStream.println("Goodbye");
+    }
+
+    private void processUsersOption(String result) {
+
+        if(commandMap.containsKey(result)) {
+            Command command = commandMap.get(result);
+            command.execute();
+        }
+//        if(result.equals("1")){
+//            biblioteca.listBooks();
+//        }
+//        else if(result.equals("2")){
+//            biblioteca.checkoutBook();
+//        }
     }
 
     public String readUserInput() throws IOException {
@@ -56,20 +76,6 @@ public class MainMenu {
         }
         return str;
     }
-
-    public void processUserInput() {
-        /*Map<String, Command> commandMap = new HashMap<>();
-        commandMap.put("1", new ListBooksCommand());
-        String input = readUserInput();
-        if(commandMap.containsKey(input)) {
-            Command command = commandMap.get(input);
-            command.execute();
-        }*/
-
-    }
-
-
-
 
 }
 

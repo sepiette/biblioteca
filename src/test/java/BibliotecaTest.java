@@ -5,6 +5,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.*;
 
 public class BibliotecaTest {
@@ -44,5 +45,14 @@ public class BibliotecaTest {
         verify(book, times(3)).printBookInformation();
     }
 
-    
+    @Test
+    public void shouldRemoveBookFromCollectionWhenCheckoutIsCalled() {
+        String str = new String();
+        when(book.isThisYourTitle(str)).thenReturn(true);
+        listOfBooks.add(book);
+        biblioteca.checkoutBook(str);
+        assertFalse(listOfBooks.contains(book));
+    }
+
+
 }
