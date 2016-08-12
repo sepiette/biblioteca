@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.Collection;
 
@@ -6,10 +9,12 @@ public class Biblioteca {
     //cant instantiate a instance of Collection because its an interface
     private Collection<Book> listOfBooks;
     private PrintStream printStream;
+    private BufferedReader reader;
 
     public Biblioteca(Collection<Book> listOfBooks, PrintStream printStream) {
         this.listOfBooks = listOfBooks;
         this.printStream = printStream;
+        this.reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
     public void listBooks() {
@@ -19,17 +24,19 @@ public class Biblioteca {
     }
 
     public void checkoutBook() {
-        askUserForBookTitleToCheckout();
+        printStream.println("Enter Title of Book you wish to checkout:");
+        listOfBooks.remove(0);
     }
 
     private void askUserForBookTitleToCheckout() {
-        //ask user for book title to check out
-        System.out.println("Please enter a book title to checkout");
-        String bookTitle = reader.readLine();
-        for(Book book: listOfBooks) {
-            if(book.isThisYourTitle(bookTitle)) {
-                listOfBooks.remove(book);
-            }
-        }
+
     }
+//    private String readUserInput(){
+//        try {
+//            return reader.readLine();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 }

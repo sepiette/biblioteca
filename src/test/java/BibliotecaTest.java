@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 public class BibliotecaTest {
@@ -46,13 +47,26 @@ public class BibliotecaTest {
     }
 
     @Test
-    public void shouldRemoveBookFromCollectionWhenCheckoutIsCalled() {
-        String str = new String();
-        when(book.isThisYourTitle(str)).thenReturn(true);
+    public void shouldPromptUserToCheckoutBook() throws Exception {
         listOfBooks.add(book);
-        biblioteca.checkoutBook(str);
+        biblioteca.checkoutBook();
+        verify(printStream).println("Enter Title of Book you wish to checkout:");
+    }
+    @Test
+    public void shouldRemoveBookWhenUserChecksOut(){
+        listOfBooks.add(book);
+        biblioteca.checkoutBook();
         assertFalse(listOfBooks.contains(book));
     }
+
+    //    @Test
+//    public void shouldRemoveBookFromCollectionWhenCheckoutIsCalled() {
+//        String str = new String();
+//        when(book.isThisYourTitle(str)).thenReturn(true);
+//        listOfBooks.add(book);
+//        biblioteca.checkoutBook();
+//        assertFalse(listOfBooks.contains(book));
+//    }
 
 
 }
