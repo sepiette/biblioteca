@@ -7,25 +7,25 @@ public class Biblioteca {
 
     //cant instantiate a instance of Collection because its an interface
     private Collection<Book> listOfBooks;
+    private BookCollection bookCollection;
     private PrintStream printStream;
     private BufferedReader reader;
 
-    public Biblioteca(Collection<Book> listOfBooks, PrintStream printStream, BufferedReader reader) {
+    public Biblioteca(Collection<Book> listOfBooks, BookCollection bookCollection, PrintStream printStream, BufferedReader reader) {
         this.listOfBooks = listOfBooks;
+        this.bookCollection = bookCollection;
         this.printStream = printStream;
         this.reader = reader;
     }
 
     public void listBooks() {
-        for(Book book: listOfBooks) {
-            book.printBookInformation();
-        }
+        bookCollection.print();
     }
 
     public void checkoutBook() {
         printStream.println("Enter Title of Book you wish to checkout:");
+        String input = readUserInput();
         for(Book book: listOfBooks){
-            String input = readUserInput();
             if(book.isThisYourTitle(input)){
                 listOfBooks.remove(book);
                 break;

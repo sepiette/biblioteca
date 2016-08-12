@@ -2,7 +2,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.BufferedReader;
-import java.io.Console;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,36 +18,22 @@ public class BibliotecaTest {
     private Book book;
     private PrintStream printStream;
     private BufferedReader reader;
+    private BookCollection bookCollection;
 
     @Before
     public void setUp() throws Exception {
-        listOfBooks = new ArrayList<>();
+        bookCollection = mock(BookCollection.class);
         book = mock(Book.class);
         printStream = mock(PrintStream.class);
         reader = mock(BufferedReader.class);
-        biblioteca = new Biblioteca(listOfBooks,printStream,reader);
+        listOfBooks = new ArrayList<Book>();
+        biblioteca = new Biblioteca(listOfBooks, bookCollection,printStream,reader);
     }
 
     @Test
-    public void shouldPrintNothingWhenThereAreNoBooks() {
+    public void shouldListBooksWhenLibraryRequestsBookList() {
         biblioteca.listBooks();
-        verifyZeroInteractions(book);
-    }
-
-    @Test
-    public void shouldPrintOneBookWhenThereIsOneBook() {
-        listOfBooks.add(book);
-        biblioteca.listBooks();
-        verify(book).printBookInformation();
-    }
-
-    @Test
-    public void shouldPrintMultipleBooksWhenThereAreMultipleBooks() {
-        listOfBooks.add(book);
-        listOfBooks.add(book);
-        listOfBooks.add(book);
-        biblioteca.listBooks();
-        verify(book, times(3)).printBookInformation();
+        verify(bookCollection).print();
     }
 
     @Test
@@ -56,12 +41,6 @@ public class BibliotecaTest {
         listOfBooks.add(book);
         biblioteca.checkoutBook();
         verify(printStream).println("Enter Title of Book you wish to checkout:");
-    }
-    @Test
-    public void shouldRemoveBookWhenUserChecksOut(){
-        listOfBooks.add(book);
-        biblioteca.checkoutBook();
-        assertFalse(listOfBooks.contains(book));
     }
 
     @Test
@@ -73,15 +52,10 @@ public class BibliotecaTest {
         listOfBooks.add(book1);
         biblioteca.checkoutBook();
         assertTrue(listOfBooks.contains(book));
+        assertFalse(listOfBooks.contains(book1));
     }
-    //    @Test
-//    public void shouldRemoveBookFromCollectionWhenCheckoutIsCalled() {
-//        String str = new String();
-//        when(book.isThisYourTitle(str)).thenReturn(true);
-//        listOfBooks.add(book);
-//        biblioteca.checkoutBook();
-//        assertFalse(listOfBooks.contains(book));
-//    }
+
+
 
 
 }
